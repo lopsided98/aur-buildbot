@@ -1,0 +1,74 @@
+ui:
+  url: https://example.com/
+  port: 8010
+# Repository where packages are stored
+repo:
+  name: aur-buildbot
+  directory: /srv/http/aur-buildbot
+# Interval in seconds between package update checks
+poll_interval: 3600
+# Port for workers to connect to
+port: 7192
+email:
+  from: aur-buildbot@example.com
+  to: [ "user@example.com" ]
+  smtp:
+    addr: smtp.gmail.com
+    port: 587
+    user: user
+    password: "password"
+    use_tls: true
+workers:
+  Worker-x86_64-1: "password"
+  Worker-x86_64-2: "password"
+  Worker-armv7h: "password"
+architectures:
+  any:
+    - Worker-x86_64-1
+    - Worker-x86_64-2
+  x86_64:
+    - Worker-x86_64-1
+    - Worker-x86_64-2
+  armv7h:
+    - Worker-armv7h
+packages:
+  buildbot: {}
+  python3-aur: {}
+  python-keras: {}
+  telegraf: {}
+  tinyssh-convert: {}
+  qdriverstation: {}
+  qdriverstation-git: {}
+  zotero: {}
+  solaar: {}
+  clion: {}
+  pycharm-professional: {}
+  gnome-mpv: {}
+  cutecom: {}
+  webstorm: {}
+  ghetto-skype: {}
+  influxdb: {}
+  ucspi-tcp: 
+    architectures: [armv7h]
+  sanoid-git: {}
+  dkms-sorted: {}
+  zfs-dkms:
+    architectures: [armv7h]
+  ovpngen: {}
+  sbupdate-git: {}
+  libvirt-zfs: {}
+  chrome-gnome-shell-git: {}
+  dex2jar: {}
+  lejos-nxj: {}
+  eagle: {}
+  python-v4l2capture:
+    architectures: [armv7h]
+  heimdall-git: {}
+  grpc:
+    architectures: [armv7h]
+  jd-gui:
+    dependencies: [jdk8-openjdk]
+  chromium-vaapi: {}
+  lcov: {}
+  python-port-for: {}
+  python-sphinx-autobuild: {}
