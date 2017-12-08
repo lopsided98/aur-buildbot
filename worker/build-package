@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -xe
 
 # See https://gist.github.com/tvlooy/cbfbdb111a4ebad8b93e
 script_dir="$(dirname $(readlink -f "$0"))"
