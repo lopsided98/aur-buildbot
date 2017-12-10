@@ -109,11 +109,10 @@ def find_dependencies(packages):
             full_info['architectures'] = architectures
             
             dependencies = set()
-            dependencies.update(_remove_versions(pkgbase_srcinfo.get('depends', tuple())))
-            dependencies.update(_remove_versions(pkgbase_srcinfo.get('makedepends', tuple())))
-            for split_srcinfo in srcinfo['pkgname'].values():
-                dependencies.update(_remove_versions(split_srcinfo.get('depends', tuple())))
-                dependencies.update(_remove_versions(split_srcinfo.get('makedepends', tuple())))
+            for dep_type in ('depends', 'makedepends', 'checkdepends'):
+              dependencies.update(_remove_versions(pkgbase_srcinfo.get(dep_type, tuple())))
+              for split_srcinfo in srcinfo['pkgname'].values():
+                  dependencies.update(_remove_versions(split_srcinfo.get(dep_type, tuple())))
             
             full_info['dependencies'] = dependencies
             
