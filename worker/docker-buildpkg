@@ -14,7 +14,7 @@ fi
 for key_id in $EXTRA_KEYS
 do
     echo "Adding key $key_id..."
-    pacman-key --keyserver hkp://pool.sks-keyservers.net -r "${key_id}"
+    pacman-key --keyserver hkp://ha.pool.sks-keyservers.net -r "${key_id}"
     pacman-key --lsign-key "${key_id}"
 done
 
