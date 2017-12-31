@@ -113,6 +113,9 @@ def find_dependencies(packages):
               dependencies.update(_remove_versions(pkgbase_srcinfo.get(dep_type, tuple())))
               for split_srcinfo in srcinfo['pkgname'].values():
                   dependencies.update(_remove_versions(split_srcinfo.get(dep_type, tuple())))
+            # Don't depend on ourselves. Sometimes self dependencies get 
+            # introduced because split packages depend on other parts
+            dependencies -= set(srcinfo['pkgname'].keys())
             
             full_info['dependencies'] = dependencies
             
