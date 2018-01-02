@@ -10,7 +10,6 @@ RUN echo "Server = ${MIRROR_URL}" > /etc/pacman.d/mirrorlist \
          git \
          mercurial \
          namcap \
-         pkgbuild-introspection \
          svn \
     && rm -f \
          /var/cache/pacman/pkg/* \
