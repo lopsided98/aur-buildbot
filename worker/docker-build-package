@@ -11,8 +11,7 @@ if [ -n "${MIRROR_URL}" ]; then
 	echo "Server = ${MIRROR_URL}" > /etc/pacman.d/mirrorlist
 fi
 
-for key_id in $EXTRA_KEYS
-do
+for key_id in $EXTRA_KEYS; do
     echo "Adding key $key_id..."
     pacman-key --keyserver hkp://ha.pool.sks-keyservers.net -r "${key_id}"
     pacman-key --lsign-key "${key_id}"

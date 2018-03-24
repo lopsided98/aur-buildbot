@@ -21,4 +21,4 @@ COPY docker-buildpkg /usr/local/bin
 
 ENV BUILD_UID ${BUILD_UID}
 ENV MIRROR_URL ${MIRROR_URL}
-ENTRYPOINT ["/usr/local/bin/docker-buildpkg"]
+ENTRYPOINT ["/usr/local/bin/docker-build-package"]
