@@ -13,7 +13,10 @@ fi
 
 for key_id in $EXTRA_KEYS; do
     echo "Adding key $key_id..."
-    pacman-key --keyserver hkp://ha.pool.sks-keyservers.net -r "${key_id}"
+    # Retry up to 10 times because keyservers seem to be flakey in Docker
+    for i in {1..10}; do 
+          pacman-key --keyserver hkp://ha.pool.sks-keyservers.net -r "${key_id}" && break
+    done
     pacman-key --lsign-key "${key_id}"
 done
 
