@@ -11,8 +11,6 @@ import yaml
 
 log = Logger('aur_buildbot.packages')
 
-_aur_srcinfo = AurSrcinfo(dbpath=os.path.join(basedir, 'aur.cache'))
-
 _package_cache_file = os.path.join(basedir, 'packages.cache')
 try:
     with open(_package_cache_file, 'r') as stream:
@@ -55,6 +53,8 @@ def invalidate_package(package):
     del _package_cache[package]
 
 def find_dependencies(packages):
+    aur_srcinfo = AurSrcinfo(dbpath=os.path.join(basedir, 'aur.cache'))
+
     all_packages = {}
     package_queue = collections.deque(packages.items())
     
@@ -106,7 +106,7 @@ def find_dependencies(packages):
             'sources' not in full_info):
             # Get .SRCINFO to fill in rest of information
             log.debug("Cached info for '{package}' not complete, retrieving .SRCINFO", package=package)
-            srcinfo = next(_aur_srcinfo.get([package]))
+            srcinfo = next(aur_srcinfo.get([package]))
             pkgbase_srcinfo = srcinfo['pkgbase'][1]
             architectures = pkgbase_srcinfo['arch']
             full_info['architectures'] = architectures
