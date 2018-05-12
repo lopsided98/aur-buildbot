@@ -51,6 +51,9 @@ def aur_info(packages):
 def aur_url(package):
     return 'https://aur.archlinux.org/{}.git'.format(package)
 
+def invalidate_package(package):
+    del _package_cache[package]
+
 def find_dependencies(packages):
     all_packages = {}
     package_queue = collections.deque(packages.items())
@@ -71,7 +74,7 @@ def find_dependencies(packages):
                 # Mark package as not found in the AUR and skip further
                 # processing
                 _package_cache[package] = {'aur': False}
-                log.debug("'{package}' not found AUR", package=package)
+                log.debug("'{package}' not found in AUR", package=package)
                 continue
 
             package_base = remote_info['PackageBase']
@@ -164,9 +167,7 @@ def find_dependencies(packages):
         if new_package or new_architectures:
             package_queue.extend(zip(
                 output_info['dependencies'],
-                itertools.repeat({
-                    'architectures': propogate_architectures
-                })
+                itertools.repeat({'architectures': propogate_architectures})
             ))
     
     with open(_package_cache_file, 'w') as stream:
