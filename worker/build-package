@@ -11,16 +11,14 @@ else
   MIRROR_URL='http://mirror.lty.me/archlinux/$repo/os/$arch'
 fi
 
-pacman_conf="pacman-${arch}.conf"
-
 docker pull lopsided/archlinux:devel
 docker build -t aur-buildbot-worker \
+  --build-arg ARCH="${arch}" \
   --build-arg MIRROR_URL="${MIRROR_URL}" \
   "${script_dir}"
 docker image prune -f
 docker run --rm \
     -v "$(pwd):/pkg" \
-    -v "${script_dir}/${pacman_conf}:/etc/pacman.conf" \
     -e DEP_PKGS="${*:1}" \
     -e EXTRA_KEYS='5E1ABF240EE7A126' \
     -e BUILD_UID=$(id -u aur-buildbot-worker) \

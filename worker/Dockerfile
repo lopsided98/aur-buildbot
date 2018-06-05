@@ -1,6 +1,7 @@
 FROM lopsided/archlinux:devel
 LABEL maintainer "Ben Wolsieffer <benwolsieffer@gmail.com>"
 
+ARG ARCH="x86_64"
 ARG MIRROR_URL="https://mirrors.kernel.org/archlinux/\$repo/os/\$arch"
 ARG BUILD_UID="1000"
 
@@ -17,6 +18,7 @@ RUN echo "Server = ${MIRROR_URL}" > /etc/pacman.d/mirrorlist \
          /etc/pacman.d/mirrorlist.pacnew \
     && mkdir /pkg
 
+COPY pacman-${ARCH}.conf /etc/pacman/pacman.conf
 COPY docker-build-package /usr/local/bin
 
 ENV BUILD_UID ${BUILD_UID}
