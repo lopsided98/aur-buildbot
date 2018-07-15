@@ -18,7 +18,7 @@ RUN echo "Server = ${MIRROR_URL}" > /etc/pacman.d/mirrorlist \
          /etc/pacman.d/mirrorlist.pacnew \
     && mkdir /pkg
 
-COPY pacman-${ARCH}.conf /etc/pacman/pacman.conf
+COPY pacman-${ARCH}.conf /etc/pacman.conf
 COPY docker-build-package /usr/local/bin
 
 ENV BUILD_UID ${BUILD_UID}
