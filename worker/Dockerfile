@@ -2,11 +2,13 @@ FROM lopsided/archlinux:devel
 LABEL maintainer "Ben Wolsieffer <benwolsieffer@gmail.com>"
 
 ARG ARCH="x86_64"
-ARG MIRROR_URL="https://mirrors.kernel.org/archlinux/\$repo/os/\$arch"
 ARG BUILD_UID="1000"
 
-RUN echo "Server = ${MIRROR_URL}" > /etc/pacman.d/mirrorlist \
-    && pacman -Syu --noconfirm \
+COPY pacman-${ARCH}.conf /etc/pacman.conf
+COPY mirrorlist-${ARCH} /etc/pacman.d/mirrorlist
+COPY docker-build-package /usr/local/bin
+
+RUN pacman -Syu --noconfirm \
          bzr \
          git \
          mercurial \
@@ -18,9 +20,5 @@ RUN echo "Server = ${MIRROR_URL}" > /etc/pacman.d/mirrorlist \
          /etc/pacman.d/mirrorlist.pacnew \
     && mkdir /pkg
 
-COPY pacman-${ARCH}.conf /etc/pacman.conf
-COPY docker-build-package /usr/local/bin
-
 ENV BUILD_UID ${BUILD_UID}
-ENV MIRROR_URL ${MIRROR_URL}
 ENTRYPOINT ["/usr/local/bin/docker-build-package"]

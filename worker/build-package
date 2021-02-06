@@ -5,16 +5,9 @@ script_dir="$(dirname $(readlink -f "$0"))"
 
 arch=$(uname -m)
 
-if [[ "${arch}" == armv* ]]; then
-  MIRROR_URL='http://mirror.archlinuxarm.org/$arch/$repo'
-else
-  MIRROR_URL='https://arch.mirror.square-r00t.net/$repo/os/$arch'
-fi
-
 docker pull lopsided/archlinux:devel
 docker build -t aur-buildbot-worker \
   --build-arg ARCH="${arch}" \
-  --build-arg MIRROR_URL="${MIRROR_URL}" \
   "${script_dir}"
 docker image prune -f
 docker run --rm \
@@ -22,5 +15,4 @@ docker run --rm \
     -e DEP_PKGS="${*:1}" \
     -e EXTRA_KEYS='5E1ABF240EE7A126' \
     -e BUILD_UID=$(id -u aur-buildbot-worker) \
-    -e MIRROR_URL="${MIRROR_URL}" \
     aur-buildbot-worker --skippgpcheck --ignorearch
