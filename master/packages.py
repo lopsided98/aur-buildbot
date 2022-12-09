@@ -31,7 +31,7 @@ def _parse_source_url(url):
     return _source_url_regex.search(url).groupdict()
 
 def aur_info(packages):
-    if not isinstance(packages, collections.Sequence) or isinstance(packages, str):
+    if not isinstance(packages, collections.abc.Sequence) or isinstance(packages, str):
         input_list = False
         packages = [packages]
     else:
